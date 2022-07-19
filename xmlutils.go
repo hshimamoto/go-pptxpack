@@ -27,9 +27,18 @@ func xmlfmt(xml string) string {
 }
 
 func unpackXML(xml string) (string, error) {
+	// check Microsoft Office PowerPoint
 	a := strings.Split(xml, "\r\n")
 	if len(a) != 2 {
-		return "", fmt.Errorf("bad xml")
+		// check LibreOffice on Linux
+		a = strings.Split(xml, "\n")
+		if len(a) < 2 {
+			return "", fmt.Errorf("bad xml")
+		}
+		// remove LFs and spaces between tags
+		a1 := strings.Join(a[1:], "")
+		a1 = regexp.MustCompile("> +<").ReplaceAllString(a1, "><")
+		a[1] = a1
 	}
 	s := xmlfmt(a[1])
 	r := strings.Replace(
