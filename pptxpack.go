@@ -69,7 +69,7 @@ func (p *PPTX) Unpack(path string) error {
 		if err != nil {
 			return err
 		}
-		if strings.HasSuffix(zpath, ".xml") || strings.HasSuffix(zpath, ".xml.rels") {
+		if strings.HasSuffix(zpath, ".xml") || strings.HasSuffix(zpath, ".rels") {
 			buf := new(bytes.Buffer)
 			buf.ReadFrom(zf)
 			xml, err := unpackXML(buf.String())
