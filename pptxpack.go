@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 )
@@ -84,6 +85,7 @@ func (p *PPTX) Unpack(path string) error {
 		list = append(list, zpath)
 	}
 	listpath := filepath.Join(p.path, "files.list")
+	sort.Strings(list)
 	return os.WriteFile(listpath, []byte(strings.Join(list, "\n")), 0644)
 }
 
